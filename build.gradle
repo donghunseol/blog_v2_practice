@@ -1,0 +1,45 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.2'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'shop.mtcoding'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '21'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0' 	// Java의 기본 언어 기능을 확장하는 유틸리티 클래스 모음
+	implementation group: 'com.auth0', name: 'java-jwt', version: '4.3.0' 				// JWT 인증을 위한 라이브러리
+	implementation 'org.springframework.boot:spring-boot-starter-aop' 					// AOP(Aspect-Oriented Programming) 지원을 위한 스타터
+	implementation 'org.springframework.boot:spring-boot-starter-validation' 			// Bean Validation API를 사용한 검증 지원
+	implementation group: 'org.qlrm', name: 'qlrm', version: '4.0.1' 					// JPA 쿼리 결과를 POJO로 매핑해주는 라이브러리
+	implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4' 				// 비밀번호 해싱을 위한 라이브러리
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' 				// JPA를 사용한 데이터 접근 지원
+	implementation 'org.springframework.boot:spring-boot-starter-mustache' 				// Mustache 템플릿 엔진을 사용한 뷰 렌더링 지원
+	implementation 'org.springframework.boot:spring-boot-starter-web' 					// Web 애플리케이션 개발을 위한 스타터
+	compileOnly 'org.projectlombok:lombok' 												// Lombok 라이브러리, 반복되는 코드(예: getter, setter)를 줄여줌
+	developmentOnly 'org.springframework.boot:spring-boot-devtools' 					// 개발 시 유용한 기능(예: 자동 재시작)을 제공하는 라이브러리
+	runtimeOnly 'com.h2database:h2' 													// 개발용 인메모리 데이터베이스
+	runtimeOnly 'com.mysql:mysql-connector-j' 											// MySQL 데이터베이스 연결을 위한 JDBC 드라이버
+	annotationProcessor 'org.projectlombok:lombok' 										// Lombok 라이브러리를 사용하기 위한 설정
+	testImplementation 'org.springframework.boot:spring-boot-starter-test' 				// 테스트를 지원하는 스프링 부트 스타터
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
