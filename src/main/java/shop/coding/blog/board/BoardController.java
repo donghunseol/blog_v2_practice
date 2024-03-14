@@ -15,7 +15,7 @@ public class BoardController {
 
     private final BoardNativeRepository boardNativeRepository;
 
-    @GetMapping("/" )
+    @GetMapping("/")
     public String index(HttpServletRequest request) {
         List<Board> boardList = boardNativeRepository.findAll();
         request.setAttribute("boardList", boardList);
@@ -23,7 +23,7 @@ public class BoardController {
     }
 
     @PostMapping("/board/save")
-    public String save(BoardResponse.SaveDTO responseDTO){
+    public String save(BoardResponse.SaveDTO responseDTO) {
         boardNativeRepository.save(responseDTO);
         return "redirect:/";
     }
@@ -34,7 +34,9 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}")
-    public String detail(@PathVariable Integer id) {
+    public String detail(@PathVariable Integer id, HttpServletRequest request) {
+        Board board = boardNativeRepository.findById(id);
+        request.setAttribute("board", board);
         return "board/detail";
     }
 }
