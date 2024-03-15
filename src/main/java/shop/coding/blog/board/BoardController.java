@@ -15,6 +15,19 @@ public class BoardController {
 
     private final BoardNativeRepository boardNativeRepository;
 
+    @PostMapping("/board/{id}/update")
+    public String update(@PathVariable Integer id, BoardRequest.UpdateDTO requestDTO){
+        boardNativeRepository.updateById(id, requestDTO.getUsername(), requestDTO.getTitle(), requestDTO.getContent());
+        return "redirect:/";
+    }
+
+    @GetMapping("/board/{id}/update-form")
+    public String updateForm(@PathVariable Integer id, HttpServletRequest request){
+        Board board = boardNativeRepository.findById(id);
+        request.setAttribute("board", board);
+        return "board/update-form";
+    }
+
     @PostMapping("/board/{id}/delete")
     public String delete(@PathVariable Integer id){
         boardNativeRepository.deleteById(id);
@@ -29,7 +42,7 @@ public class BoardController {
     }
 
     @PostMapping("/board/save")
-    public String save(BoardResponse.SaveDTO responseDTO) {
+    public String save(BoardRequest.SaveDTO responseDTO) {
         boardNativeRepository.save(responseDTO);
         return "redirect:/";
     }
